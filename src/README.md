@@ -20,14 +20,18 @@ make build && make install
 ```bash
 luarocks install busted
 ```
-修改`busted`bin文件
+添加`busted`bin文件
 ```shell
 #!/data/openresty/bin/resty
-
+#
+# description   :test launch script add custom search path
+# author        :shanyou
+# date          :2018/4/9
 if ngx ~= nil then
   ngx.exit = function()end
 end
-
+local search_path='/data/openresty/nginx/lib'
+package.path = package.path .. ";" .. search_path .. "/?.lua;;"
 -- Busted command-line runner
 require 'busted.runner'({ standalone = false })
 ```
